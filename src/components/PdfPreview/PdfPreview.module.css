@@ -1,0 +1,232 @@
+.card {
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #ffffff;
+  animation: cardIn 0.32s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(6px) scale(0.99); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.bar {
+  padding: 12px 14px;
+  background: #f8fafc;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.fileRow {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+  flex: 1;
+}
+
+.fileIconWrap {
+  color: #6366f1;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+
+.fileName {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #1e293b;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 160px;
+  font-family: 'DM Mono', 'Courier New', monospace;
+}
+
+.arrowWrap {
+  color: #94a3b8;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+
+.convertedBadge {
+  background: #dcfce7;
+  color: #166534;
+  border: 1px solid #bbf7d0;
+  border-radius: 100px;
+  padding: 2px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+  letter-spacing: 0.01em;
+}
+
+.fileSize {
+  font-size: 11.5px;
+  color: #94a3b8;
+  white-space: nowrap;
+  font-family: 'DM Mono', 'Courier New', monospace;
+  margin-left: auto;
+}
+
+.barActions {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex-shrink: 0;
+}
+
+.previewBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #6366f1;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 7px 14px;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 150ms ease, transform 120ms ease, box-shadow 150ms ease;
+  font-family: 'DM Sans', sans-serif;
+  letter-spacing: -0.01em;
+}
+
+.previewBtn:hover {
+  background: #4f46e5;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.35);
+}
+
+.replaceBtn {
+  background: transparent;
+  color: #94a3b8;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 7px 9px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 150ms, color 150ms, background 150ms;
+}
+
+.replaceBtn:hover {
+  border-color: #fca5a5;
+  color: #ef4444;
+  background: #fff5f5;
+}
+
+/* ── Dropped attachments notice ─────────────────────────────────── */
+
+.attachmentNotice {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  padding: 9px 14px;
+  background: #fffbeb;
+  border-top: 1px solid #fde68a;
+}
+
+.noticeIcon {
+  font-size: 12px;
+  line-height: 1.6;
+  flex-shrink: 0;
+  color: #92400e;
+}
+
+.noticeText {
+  font-size: 11.5px;
+  color: #92400e;
+  line-height: 1.55;
+  word-break: break-word;
+}
+
+/* ── Preview modal ───────────────────────────────────────────────── */
+
+.modalBackdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 24px;
+  animation: backdropIn 0.18s ease both;
+}
+
+@keyframes backdropIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.modalContainer {
+  width: 100%;
+  max-width: 860px;
+  height: 90vh;
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.35);
+  animation: modalIn 0.22s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(0.97) translateY(8px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.modalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid #e2e8f0;
+  background: #f8fafc;
+  flex-shrink: 0;
+}
+
+.modalFileName {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1e293b;
+  font-family: 'DM Mono', 'Courier New', monospace;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.modalCloseBtn {
+  background: none;
+  border: none;
+  font-size: 14px;
+  color: #94a3b8;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  line-height: 1;
+  flex-shrink: 0;
+  transition: background 150ms, color 150ms;
+}
+
+.modalCloseBtn:hover {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+.modalFrame {
+  flex: 1;
+  width: 100%;
+  border: none;
+  display: block;
+  background: #f8fafc;
+}

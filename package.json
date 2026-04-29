@@ -1,0 +1,45 @@
+{
+  "name": "email-file-uploader",
+  "version": "1.0.0",
+  "description": "React component for uploading .msg and .pdf files with automatic MSG-to-PDF conversion",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "cy:component": "cypress run --component",
+    "cy:e2e": "cypress run --e2e",
+    "fixtures:create": "node scripts/create-test-fixtures.mjs"
+  },
+  "dependencies": {
+    "@kenjiuno/msgreader": "^1.28.0",
+    "@reduxjs/toolkit": "^2.11.2",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^2.5.2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-dropzone": "^14.3.5",
+    "react-redux": "^9.2.0"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "@vitest/coverage-v8": "^3.2.4",
+    "cfb": "^1.2.2",
+    "cypress": "^14.5.4",
+    "jsdom": "^26.1.0",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.5",
+    "vite-plugin-node-polyfills": "^0.26.0",
+    "vitest": "^3.2.4"
+  }
+}

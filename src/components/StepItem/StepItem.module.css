@@ -1,0 +1,52 @@
+.step {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.stepDot {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid #e2e8f0;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: border-color 200ms, background 200ms;
+}
+
+.stepLabel {
+  font-size: 12.5px;
+  font-weight: 500;
+  color: #94a3b8;
+  white-space: nowrap;
+  transition: color 200ms;
+}
+
+.step_done .stepDot {
+  border-color: #10b981;
+  background: #10b981;
+  color: #ffffff;
+}
+
+.step_done .stepLabel {
+  color: #059669;
+}
+
+.step_active .stepDot {
+  border-color: #6366f1;
+  background: #eef2ff;
+  animation: stepGlow 1.4s ease-in-out infinite;
+}
+
+.step_active .stepLabel {
+  color: #6366f1;
+  font-weight: 600;
+}
+
+@keyframes stepGlow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.3); }
+  50%       { box-shadow: 0 0 0 5px rgba(99, 102, 241, 0.1); }
+}
