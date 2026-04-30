@@ -15,10 +15,8 @@
   padding: 12px 14px;
   background: #f8fafc;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .fileRow {
@@ -26,7 +24,12 @@
   align-items: center;
   gap: 7px;
   min-width: 0;
-  flex: 1;
+}
+
+.barBottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .fileIconWrap {
@@ -43,7 +46,8 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  max-width: 160px;
+  min-width: 0;
+  flex-shrink: 1;
   font-family: 'DM Mono', 'Courier New', monospace;
 }
 
@@ -71,14 +75,12 @@
   color: #94a3b8;
   white-space: nowrap;
   font-family: 'DM Mono', 'Courier New', monospace;
-  margin-left: auto;
 }
 
 .barActions {
   display: flex;
   align-items: center;
   gap: 7px;
-  flex-shrink: 0;
 }
 
 .previewBtn {

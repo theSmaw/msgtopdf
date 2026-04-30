@@ -6,7 +6,7 @@ export default defineConfig({
   test: {
     environment: 'jsdom',
     globals: true,
-    setupFiles: ['./src/test/setup.ts'],
+    setupFiles: ['./test/setup.ts'],
     include: ['src/**/*.test.{ts,tsx}'],
     testTimeout: 10000,
     css: {
@@ -16,8 +16,7 @@ export default defineConfig({
     },
     coverage: {
       provider: 'v8',
-      include: ['src/api/**', 'src/stores/**', 'src/components/**', 'src/containers/**'],
-      exclude: ['src/test/**', 'src/main.tsx', 'src/App.tsx'],
+      include: ['src/**'],
     },
   },
 })

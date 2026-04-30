@@ -1,31 +1,31 @@
-import { useDropzone } from 'react-dropzone'
-import { UploadIcon } from '../UploadIcon/UploadIcon'
-import styles from './DropZone.module.css'
+import { useDropzone } from 'react-dropzone';
+import { UploadIcon } from '../UploadIcon/UploadIcon';
+import styles from './DropZone.module.css';
 
-interface DropZoneProps {
-  onFilesAccepted: (files: File[]) => void
-  onFilesRejected: () => void
-  maxSizeMB: number
+type DropZoneProps = {
+  onFilesAccepted: (files: File[]) => void;
+  onFilesRejected: () => void;
+  maxSizeMB: number;
 }
 
 export function DropZone({ onFilesAccepted, onFilesRejected }: DropZoneProps) {
   const { getRootProps, getInputProps, isDragActive, isDragReject } = useDropzone({
     onDrop(acceptedFiles, fileRejections) {
       if (acceptedFiles.length > 0) {
-        onFilesAccepted(acceptedFiles)
+        onFilesAccepted(acceptedFiles);
       } else if (fileRejections.length > 0) {
-        onFilesRejected()
+        onFilesRejected();
       }
     },
     validator(file) {
-      const ext = file.name.split('.').pop()?.toLowerCase()
+      const ext = file.name.split('.').pop()?.toLowerCase();
       return ext === 'pdf' || ext === 'msg'
         ? null
-        : { code: 'invalid-extension', message: 'Only .pdf and .msg files are accepted' }
+        : { code: 'invalid-extension', message: 'Only .pdf and .msg files are accepted' };
     },
     maxFiles: 1,
     multiple: false,
-  })
+  });
 
   return (
     <div
@@ -51,9 +51,7 @@ export function DropZone({ onFilesAccepted, onFilesRejected }: DropZoneProps) {
         <span className={styles.typeLabel}>.MSG</span>
       </div>
 
-      {isDragReject && (
-        <p className={styles.rejectNote}>Only .pdf and .msg files are accepted</p>
-      )}
+      {isDragReject && <p className={styles.rejectNote}>Only .pdf and .msg files are accepted</p>}
     </div>
-  )
+  );
 }

@@ -1,7 +1,7 @@
-import styles from './ConversionProgress.module.css'
+import styles from './ConversionProgress.module.css';
 
-interface ConversionProgressProps {
-  status: 'parsing' | 'converting'
+type ConversionProgressProps = {
+  status: 'parsing' | 'converting';
 }
 
 export function ConversionProgress({ status }: ConversionProgressProps) {
@@ -15,5 +15,5 @@ export function ConversionProgress({ status }: ConversionProgressProps) {
         {status === 'parsing' ? 'Reading email…' : 'Converting to PDF…'}
       </span>
     </div>
-  )
+  );
 }

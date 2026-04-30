@@ -1,5 +1,5 @@
-import type { StorybookConfig } from '@storybook/react-vite'
-import { nodePolyfills } from 'vite-plugin-node-polyfills'
+import type { StorybookConfig } from '@storybook/react-vite';
+import { nodePolyfills } from 'vite-plugin-node-polyfills';
 
 const config: StorybookConfig = {
   stories: ['../src/**/*.stories.@(ts|tsx)'],
@@ -8,15 +8,15 @@ const config: StorybookConfig = {
     options: {},
   },
   viteFinal(config) {
-    config.plugins ??= []
+    config.plugins ??= [];
     config.plugins.push(
       nodePolyfills({
         include: ['buffer'],
         globals: { Buffer: true, global: true, process: false },
-      }),
-    )
-    return config
+      })
+    );
+    return config;
   },
-}
+};
 
-export default config
+export default config;
