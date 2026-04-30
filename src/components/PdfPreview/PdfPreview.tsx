@@ -66,7 +66,6 @@ function PdfPreviewModal({ pdfUrl, displayName, onClose }: PdfPreviewModalProps)
           src={`${pdfUrl}#toolbar=0`}
           title="PDF preview"
           className={styles.modalFrame}
-          sandbox="allow-same-origin allow-scripts"
           referrerPolicy="no-referrer"
         />
       </div>
