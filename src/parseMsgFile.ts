@@ -101,8 +101,9 @@ function getDroppedAttachmentNames(
   attachments: import('@kenjiuno/msgreader').FieldsData[]
 ): string[] {
   return attachments
-    .filter((att) => !att.pidContentId && att.fileName)
-    .map((att) => att.fileName as string);
+    .filter((att) => !att.pidContentId)
+    .map((att) => att.fileName ?? att.name ?? att.fileNameShort)
+    .filter((name): name is string => Boolean(name));
 }
 
 export async function parseMsgFile(file: File): Promise<ParsedEmail> {

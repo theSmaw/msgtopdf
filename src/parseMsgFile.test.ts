@@ -145,7 +145,7 @@ describe('parseMsgFile', () => {
     expect(result.bodyHtml).toContain('click');
   });
 
-  it('replaces javascript: href with #', async () => {
+  it('strips javascript: href entirely (DOMPurify removes the attribute)', async () => {
     mockGetFileData.mockReturnValue(
       makeMsgData({
         html: new TextEncoder().encode('<body><a href="javascript:void(0)">click</a></body>'),
@@ -153,7 +153,7 @@ describe('parseMsgFile', () => {
     );
     const result = await parseMsgFile(makeFile());
     expect(result.bodyHtml).not.toContain('javascript:');
-    expect(result.bodyHtml).toContain('href="#"');
+    expect(result.bodyHtml).toContain('click');
   });
 
   it('strips <style> blocks', async () => {
@@ -430,5 +430,91 @@ describe('parseMsgFile', () => {
     mockGetAttachment.mockReturnValue({ content: new Uint8Array([0x47, 0x49, 0x46]) });
     const result = await parseMsgFile(makeFile());
     expect(result.cidMap['gif@example.com']).toMatch(/^data:image\/gif;base64,/);
+  });
+
+  // ── Dropped attachments ───────────────────────────────────────────────
+
+  it('returns empty droppedAttachments when there are no attachments', async () => {
+    mockGetFileData.mockReturnValue(makeMsgData({ attachments: [] }));
+    const result = await parseMsgFile(makeFile());
+    expect(result.droppedAttachments).toEqual([]);
+  });
+
+  it('reports attachment without pidContentId as dropped (fileName field)', async () => {
+    mockGetFileData.mockReturnValue(
+      makeMsgData({
+        attachments: [{ pidContentId: undefined, extension: '.pdf', fileName: 'doc.pdf' }],
+      })
+    );
+    const result = await parseMsgFile(makeFile());
+    expect(result.droppedAttachments).toEqual(['doc.pdf']);
+  });
+
+  it('falls back to name field when fileName is missing', async () => {
+    mockGetFileData.mockReturnValue(
+      makeMsgData({
+        attachments: [{ pidContentId: undefined, name: 'report.xlsx', fileName: undefined }],
+      })
+    );
+    const result = await parseMsgFile(makeFile());
+    expect(result.droppedAttachments).toEqual(['report.xlsx']);
+  });
+
+  it('falls back to fileNameShort when fileName and name are both missing', async () => {
+    mockGetFileData.mockReturnValue(
+      makeMsgData({
+        attachments: [
+          {
+            pidContentId: undefined,
+            fileName: undefined,
+            name: undefined,
+            fileNameShort: 'short.txt',
+          },
+        ],
+      })
+    );
+    const result = await parseMsgFile(makeFile());
+    expect(result.droppedAttachments).toEqual(['short.txt']);
+  });
+
+  it('does NOT report inline (CID-referenced) attachments as dropped', async () => {
+    mockGetFileData.mockReturnValue(
+      makeMsgData({
+        attachments: [
+          { pidContentId: 'img@example.com', extension: '.png', fileName: 'inline.png' },
+        ],
+      })
+    );
+    mockGetAttachment.mockReturnValue({ content: new Uint8Array([1]) });
+    const result = await parseMsgFile(makeFile());
+    expect(result.droppedAttachments).toEqual([]);
+  });
+
+  it('reports only non-inline attachments when mixed', async () => {
+    mockGetFileData.mockReturnValue(
+      makeMsgData({
+        attachments: [
+          { pidContentId: 'img@example.com', extension: '.png', fileName: 'logo.png' },
+          { pidContentId: undefined, extension: '.pdf', fileName: 'contract.pdf' },
+          { pidContentId: undefined, extension: '.xlsx', fileName: 'data.xlsx' },
+        ],
+      })
+    );
+    mockGetAttachment.mockReturnValue({ content: new Uint8Array([1]) });
+    const result = await parseMsgFile(makeFile());
+    expect(result.droppedAttachments).toEqual(['contract.pdf', 'data.xlsx']);
+  });
+
+  it('skips dropped attachments with no resolvable name', async () => {
+    mockGetFileData.mockReturnValue(
+      makeMsgData({
+        attachments: [
+          { pidContentId: undefined, fileName: undefined, name: undefined, fileNameShort: undefined },
+          { pidContentId: undefined, fileName: 'valid.txt' },
+        ],
+      })
+    );
+    const result = await parseMsgFile(makeFile());
+    expect(result.droppedAttachments).toEqual(['valid.txt']);
   });
 });
