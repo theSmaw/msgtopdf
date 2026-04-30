@@ -62,11 +62,10 @@ function PdfPreviewModal({ pdfUrl, displayName, onClose }: PdfPreviewModalProps)
             ✕
           </button>
         </div>
-        <iframe
-          src={`${pdfUrl}#toolbar=0`}
-          title="PDF preview"
+        <embed
+          src={pdfUrl}
+          type="application/pdf"
           className={styles.modalFrame}
-          referrerPolicy="no-referrer"
         />
       </div>
     </div>,
